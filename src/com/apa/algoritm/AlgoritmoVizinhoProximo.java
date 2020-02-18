@@ -35,7 +35,7 @@ public class AlgoritmoVizinhoProximo {
 
     private Rota calcularNovaRota(int verticeInical, int capacidadeMax){
         int capacidadeAtual = capacidadeMax;
-        int proxVertice = verticeInical;
+        int proxVertice;
         int verticeAtual = verticeInical;
         Rota rota = new Rota();
 
@@ -45,7 +45,7 @@ public class AlgoritmoVizinhoProximo {
                         problema.costMatrix.get(verticeInical).get(verticeInical),
                         0);
         while (capacidadeAtual > 0){
-            proxVertice = findVerticeWithMinimalCostFrom(proxVertice, capacidadeAtual);
+            proxVertice = findVerticeWithMinimalCostFrom(verticeAtual, capacidadeAtual);
             if(proxVertice == -1){ // Nenhum vertice encontrado
                 break;
             }
@@ -56,6 +56,7 @@ public class AlgoritmoVizinhoProximo {
             verticesParaVisitar.remove(proxVertice);
 
             capacidadeAtual -= problema.demand.get(proxVertice);
+            verticeAtual = proxVertice;
         }
         rota.addVertice(verticeInical,
                         problema.costMatrix.get(verticeAtual).get(verticeInical),
