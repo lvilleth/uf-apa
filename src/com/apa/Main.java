@@ -4,18 +4,39 @@ import com.apa.algoritm.AlgoritmoVizinhoProximo;
 import com.apa.model.ProblemInfo;
 import com.apa.util.FileReader;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 public class Main {
 
     static final String RESOURCE_FOLDER = "/resources/";
+    static final String DEFAULT_FILENAME = "P-n16-k8.txt";
 
     public static void main(String[] args) {
-	    String filename = "P-n16-k8.txt";
-	    String filepath = Main.class.getResource(RESOURCE_FOLDER.concat(filename)).getPath();
+	    String filename;
+	    boolean fileFromSystem = false;
+
+	    if(args.length == 0){
+	        filename = RESOURCE_FOLDER.concat(DEFAULT_FILENAME);
+        }else {
+	        filename = args[0];
+	        fileFromSystem = true;
+        }
 
 	    try {
-			ProblemInfo problemInfo = FileReader.readScannerToInfo(filepath);
+            ProblemInfo problemInfo;
+
+            if(fileFromSystem){
+	            problemInfo = FileReader.readFileToInfo(filename);
+            }else {
+                InputStream fileStream = filename.getClass().getResourceAsStream(filename);
+                problemInfo = FileReader.readFileToInfo(fileStream);
+            }
+
             AlgoritmoVizinhoProximo algoritmoVizinhoProximo = new AlgoritmoVizinhoProximo(problemInfo);
             algoritmoVizinhoProximo.process();
+        } catch (FileNotFoundException e){
+	        System.out.println("Arquivo nao encontrado: "+ filename);
         } catch (Exception e){
 	        e.printStackTrace();
         }

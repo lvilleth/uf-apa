@@ -2,6 +2,7 @@ package com.apa.util;
 
 import com.apa.model.ProblemInfo;
 
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -14,8 +15,15 @@ public class FileReader {
         return Files.readAllLines(Paths.get(filename));
     }
 
-    public static ProblemInfo readScannerToInfo(String filename) throws Exception{
-        Scanner scan = new Scanner(Paths.get(filename));
+    public static ProblemInfo readFileToInfo(String filename) throws Exception{
+        return readFromScanner(new Scanner(Paths.get(filename)));
+    }
+
+    public static ProblemInfo readFileToInfo(InputStream fileStream) {
+        return readFromScanner(new Scanner(fileStream));
+    }
+
+    private static ProblemInfo readFromScanner(Scanner scan){
         ProblemInfo problemInfo = new ProblemInfo();
 
         scan.next(); // NAME:
