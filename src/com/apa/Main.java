@@ -2,6 +2,9 @@ package com.apa;
 
 import com.apa.algoritm.AlgoritmoVizinhoProximo;
 import com.apa.model.ProblemInfo;
+import com.apa.model.Rota;
+import com.apa.model.Solucao;
+import com.apa.movement.VizinhancaSwap;
 import com.apa.util.FileReader;
 
 import java.io.FileNotFoundException;
@@ -34,7 +37,18 @@ public class Main {
             }
 
             AlgoritmoVizinhoProximo algoritmoVizinhoProximo = new AlgoritmoVizinhoProximo(problemInfo);
-            algoritmoVizinhoProximo.process();
+            Solucao S = algoritmoVizinhoProximo.process();
+
+            System.out.println("------------------------------------------------------------");
+
+            VizinhancaSwap vizinhancaSwap = new VizinhancaSwap(problemInfo);
+            for (Rota r : S.rotas){
+                System.out.println("Original: "+ r);
+                vizinhancaSwap.createVizinhanca(r);
+                System.out.println("Menor custo:" + vizinhancaSwap.getVizinhoMenorCusto(r));
+                System.out.println("--- ###### ---");
+            }
+
         } catch (FileNotFoundException e){
 	        System.out.println("Arquivo nao encontrado: "+ filename);
         } catch (Exception e){

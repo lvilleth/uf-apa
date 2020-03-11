@@ -15,10 +15,36 @@ public class Rota {
         this.custoAtual = 0;
     }
 
-    public void addVertice(int vertice, int custoVertice, int demandaVertice){
+    public void addVertice(Integer vertice, int custoVertice, int demandaVertice){
         vertices.add(vertice);
         capacidadeAtual += demandaVertice;
         custoAtual += custoVertice;
+    }
+
+    public void removeVertice(Integer vertice, int custoVertice, int demandaVertice){
+        vertices.remove(vertice);
+        capacidadeAtual -= demandaVertice;
+        custoAtual -= custoVertice;
+    }
+
+    public void addCusto(int custo){
+        this.custoAtual += custo;
+    }
+
+    public void addDemanda(int demanda){
+        this.capacidadeAtual += demanda;
+    }
+
+    public void subCusto(int custo){
+        this.custoAtual -= custo;
+    }
+
+    public void subDemanda(int demanda){
+        this.capacidadeAtual -= demanda;
+    }
+
+    public void setVertices(List<Integer> vertices){
+        this.vertices = vertices;
     }
 
     public int getCustoAtual(){
@@ -28,6 +54,8 @@ public class Rota {
     public int getCapacidadeAtual(){
         return capacidadeAtual;
     }
+
+    public List<Integer> getVertices(){ return vertices; }
 
     @Override
     public String toString() {
