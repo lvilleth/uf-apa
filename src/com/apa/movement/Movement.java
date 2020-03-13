@@ -15,4 +15,8 @@ public abstract class Movement {
         this.demand = problemInfo.demand;
     }
 
+    protected int custo(int verticeA, int verticeB){
+        return costMatrix.get(Math.max(0, verticeA)).get(verticeB);
+    }
+
 }

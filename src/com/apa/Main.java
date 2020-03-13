@@ -4,6 +4,7 @@ import com.apa.algoritm.AlgoritmoVizinhoProximo;
 import com.apa.model.ProblemInfo;
 import com.apa.model.Rota;
 import com.apa.model.Solucao;
+import com.apa.movement.DoisOpt;
 import com.apa.movement.VizinhancaSwap;
 import com.apa.util.FileReader;
 
@@ -42,11 +43,13 @@ public class Main {
             System.out.println("------------------------------------------------------------");
 
             VizinhancaSwap vizinhancaSwap = new VizinhancaSwap(problemInfo);
+            DoisOpt opt2 = new DoisOpt(problemInfo);
             for (Rota r : S.rotas){
                 System.out.println("Original: "+ r);
                 vizinhancaSwap.createVizinhanca(r);
-                System.out.println("Menor custo:" + vizinhancaSwap.getVizinhoMenorCusto(r));
-                System.out.println("--- ###### ---");
+                System.out.println("Swap:" + vizinhancaSwap.getVizinhoMenorCusto(r));
+                System.out.println("2 - OPT:" + opt2.execute(r));
+                System.out.println("--- ###### --- \n");
             }
 
         } catch (FileNotFoundException e){
