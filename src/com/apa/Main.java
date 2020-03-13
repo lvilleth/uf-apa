@@ -5,6 +5,7 @@ import com.apa.model.ProblemInfo;
 import com.apa.model.Rota;
 import com.apa.model.Solucao;
 import com.apa.movement.DoisOpt;
+import com.apa.movement.Insertion;
 import com.apa.movement.VizinhancaSwap;
 import com.apa.util.FileReader;
 
@@ -14,7 +15,7 @@ import java.io.InputStream;
 public class Main {
 
     static final String RESOURCE_FOLDER = "/resources/";
-    static final String DEFAULT_FILENAME = "P-n16-k8.txt";
+    static final String DEFAULT_FILENAME = "P-n55-k7.txt";
 
     public static void main(String[] args) {
 	    String filename;
@@ -44,11 +45,13 @@ public class Main {
 
             VizinhancaSwap vizinhancaSwap = new VizinhancaSwap(problemInfo);
             DoisOpt opt2 = new DoisOpt(problemInfo);
+            Insertion insertion = new Insertion(problemInfo);
             for (Rota r : S.rotas){
                 System.out.println("Original: "+ r);
                 vizinhancaSwap.createVizinhanca(r);
                 System.out.println("Swap:" + vizinhancaSwap.getVizinhoMenorCusto(r));
                 System.out.println("2 - OPT:" + opt2.execute(r));
+                System.out.println("Insertion:" + insertion.execute(r));
                 System.out.println("--- ###### --- \n");
             }
 
