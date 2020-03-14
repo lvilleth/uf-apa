@@ -15,18 +15,19 @@ public class DoisOpt extends Movement {
 
     public Rota execute(Rota rotaOriginal){
         Rota melhorRota = rotaOriginal;
-        Rota novaRota;
         List<Integer> vertices = new ArrayList<>(rotaOriginal.getVertices());
 
         int custoVariacao;
         int novoCusto;
+        int[] movDoisOpt = new int[2];
+        int melhorCusto = rotaOriginal.getCustoAtual();
+
         List<Integer> janela;
         for (int inicio = 1; inicio < vertices.size() - 2; inicio++) {
             for (int fim = inicio + 1; fim < vertices.size(); fim++) {
                 if((fim - inicio) == 1){
                     continue;
                 }
-
                 // posicao fim nao inclusiva
                 custoVariacao = testaMudancaCusto(inicio, fim - 1, vertices);
 
@@ -34,25 +35,30 @@ public class DoisOpt extends Movement {
                     // calcula novo custo
                     novoCusto = rotaOriginal.getCustoAtual() + custoVariacao;
 
-                    if(novoCusto < melhorRota.getCustoAtual()){
-                        janela = new ArrayList<>(vertices.subList(inicio, fim));
-                        Collections.reverse(janela);
+                    if(novoCusto < melhorCusto){
+                        movDoisOpt[0] = inicio;
+                        movDoisOpt[1] = fim;
 
-                        novaRota = new Rota();
-                        novaRota.addDemanda(rotaOriginal.getCapacidadeAtual());
-                        novaRota.getVertices().addAll(vertices.subList(0, inicio));
-                        novaRota.getVertices().addAll(janela); // invertido
-                        novaRota.getVertices().addAll(vertices.subList(fim, vertices.size()));
-                        novaRota.addCusto(novoCusto);
-
-                        melhorRota = novaRota;
+                        melhorCusto = novoCusto;
                     }
-
                 }
-
             }
         }
 
+        if(melhorCusto != rotaOriginal.getCustoAtual()){
+            int inicio  = movDoisOpt[0];
+            int fim     = movDoisOpt[1];
+
+            janela = new ArrayList<>(vertices.subList(inicio, fim));
+            Collections.reverse(janela);
+
+            melhorRota = new Rota();
+            melhorRota.addDemanda(rotaOriginal.getCapacidadeAtual());
+            melhorRota.getVertices().addAll(vertices.subList(0, inicio));
+            melhorRota.getVertices().addAll(janela); // invertido
+            melhorRota.getVertices().addAll(vertices.subList(fim, vertices.size()));
+            melhorRota.addCusto(melhorCusto);
+        }
         return melhorRota;
     }
 
