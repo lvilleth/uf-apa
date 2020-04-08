@@ -1,6 +1,7 @@
 package com.apa.movement;
 
 import com.apa.model.ProblemInfo;
+import com.apa.model.Rota;
 
 import java.util.List;
 import java.util.Map;
@@ -18,5 +19,7 @@ public abstract class Movement {
     protected int custo(int verticeA, int verticeB){
         return costMatrix.get(Math.max(0, verticeA)).get(verticeB);
     }
+
+    public abstract Rota execute(Rota rotaOriginal);
 
 }
