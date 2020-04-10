@@ -28,7 +28,7 @@ public class AlgoritmoVizinhoProximo {
             rotas.add(proxRota);
         }
         solucao = new Solucao(rotas);
-        System.out.println(solucao);
+//        System.out.println(solucao);
 
         return solucao;
     }

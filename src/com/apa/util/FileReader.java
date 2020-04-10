@@ -53,6 +53,7 @@ public class FileReader {
                     problemInfo.costMatrix.put(i, costList);
                 }
                 costList.add(scan.nextInt());
+//                System.out.println(String.format("(%d,%d)= %d",i,j,problemInfo.costMatrix.get(i).get(j)));
             }
         }
 

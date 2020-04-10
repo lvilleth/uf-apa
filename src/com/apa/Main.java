@@ -5,6 +5,7 @@ import com.apa.algoritm.VND;
 import com.apa.model.ProblemInfo;
 import com.apa.model.Solucao;
 import com.apa.util.FileReader;
+import com.apa.util.TableDataProducer;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -14,7 +15,14 @@ public class Main {
     static final String RESOURCE_FOLDER = "/resources/";
     static final String DEFAULT_FILENAME = "P-n45-k5.txt";
 
+    static final boolean datForTable = true;
+
     public static void main(String[] args) {
+        if(datForTable){
+            produceTableData();
+            return;
+        }
+
 	    String filename;
 	    boolean fileFromSystem = false;
 
@@ -51,5 +59,10 @@ public class Main {
 	        e.printStackTrace();
         }
 
+    }
+
+    private static void produceTableData(){
+        TableDataProducer tdp = new TableDataProducer();
+        tdp.run();
     }
 }
