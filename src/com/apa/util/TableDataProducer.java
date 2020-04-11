@@ -80,8 +80,17 @@ public class TableDataProducer {
         data.setMediaSolucao(mediaSolucao);
         data.setMelhorSolucao(melhorSolucao);
         data.setOtimo(otimoValues.get(instancia.name));
+        data.setGap(gap(data.getMediaSolucao(), instancia.name));
 
         return data;
+    }
+
+    private float gap(Float value, String instance){
+        if(!otimoValues.containsKey(instance)){
+            return 0f;
+        }
+        float otimo = otimoValues.get(instance);
+        return ((value - otimo)/otimo)*100f;
     }
 
     private Queue<String> readData(){
