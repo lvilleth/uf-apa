@@ -61,7 +61,7 @@ public class TableDataProducer {
         float somatempoExecucao = 0;
         long antes;
         float mediaTempo;
-        float melhorSolucao = -1;
+        float melhorSolucao = Float.MAX_VALUE;
         int solucaoAtual;
         float somaSolucao = 0;
         float mediaSolucao;
@@ -71,7 +71,7 @@ public class TableDataProducer {
             somatempoExecucao += System.currentTimeMillis() - antes;
 
             solucaoAtual = s.custoTotal;
-            melhorSolucao = Math.max(solucaoAtual, melhorSolucao);
+            melhorSolucao = Math.min(solucaoAtual, melhorSolucao);
             somaSolucao += solucaoAtual;
         }
         mediaTempo = somatempoExecucao / N_EXECUCOES;
@@ -80,7 +80,7 @@ public class TableDataProducer {
         data.setMediaSolucao(mediaSolucao);
         data.setMelhorSolucao(melhorSolucao);
         data.setOtimo(otimoValues.get(instancia.name));
-        data.setGap(gap(data.getMediaSolucao(), instancia.name));
+        data.setGap(gap(data.getMelhorSolucao(), instancia.name));
 
         return data;
     }

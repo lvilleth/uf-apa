@@ -10,6 +10,7 @@ public class AlgoritmoVizinhoProximo {
 
     private ProblemInfo problema;
     private Set<Integer> verticesParaVisitar;
+    private int N_RANDOM = 3;
 
 
     public AlgoritmoVizinhoProximo(ProblemInfo problemInfo){
@@ -44,6 +45,15 @@ public class AlgoritmoVizinhoProximo {
         rota.addVertice(verticeInical,
                         problema.costMatrix.get(verticeInical).get(verticeInical),
                         0);
+
+        // primeiro vertice aleatorio com menorCusto
+        proxVertice = findRandomMinimalCost(verticeInical, capacidadeMax);
+        rota.addVertice(proxVertice,
+                problema.costMatrix.get(verticeAtual).get(proxVertice),
+                problema.demand.get(proxVertice));
+        capacidadeAtual -= problema.demand.get(proxVertice);
+        verticeAtual = proxVertice;
+
         while (capacidadeAtual > 0){
             proxVertice = findVerticeWithMinimalCostFrom(verticeAtual, capacidadeAtual);
             if(proxVertice == -1){ // Nenhum vertice encontrado
@@ -79,6 +89,23 @@ public class AlgoritmoVizinhoProximo {
         }
 
         return verticeWithMinimalCost;
+    }
+
+    private Integer findRandomMinimalCost(int x, int capacidadeMax){
+        List<Integer> minimals = new LinkedList<>();
+        int min;
+        for (int i = 0; i < N_RANDOM; i++) {
+            min = findVerticeWithMinimalCostFrom(0, capacidadeMax);
+            if(min == -1){ // Nenhum vertice encontrado
+                break;
+            }
+            minimals.add(min);
+            verticesParaVisitar.remove(min);
+        }
+        int randomInt = new Random().nextInt(minimals.size());
+        int chosenVert = minimals.remove(randomInt);
+        verticesParaVisitar.addAll(minimals);
+        return chosenVert;
     }
 
     private boolean isDemandtOverCapacity(int x, int capacidadeAtual){
